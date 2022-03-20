@@ -1,0 +1,26 @@
+{
+  "name": "ikalas",
+  "version": "1.0.0",
+  "description": "The Official Ikalas Node.js API Library",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ikalasdev/ikalas-nodejs.git"
+  },
+  "keywords": [
+    "ikalas",
+    "api"
+  ],
+  "author": "Ikalas Team",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ikalasdev/ikalas-nodejs/issues"
+  },
+  "homepage": "https://github.com/ikalasdev/ikalas-nodejs#readme",
+  "dependencies": {
+    "axios": "^0.26.1"
+  }
+}
