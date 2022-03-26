@@ -1,5 +1,5 @@
 {
-  "name": "ikalas",
+  "name": "@ikalasdev/ikalas",
   "version": "1.0.0",
   "description": "The Official Ikalas Node.js API Library",
   "main": "index.js",
@@ -22,5 +22,6 @@
   "homepage": "https://github.com/ikalasdev/ikalas-nodejs#readme",
   "dependencies": {
     "axios": "^0.26.1"
-  }
+  },
+  "devDependencies": {}
 }
