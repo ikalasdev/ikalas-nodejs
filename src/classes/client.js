@@ -2,13 +2,11 @@
 
 const axios = require("axios");
 
-const IKALAS_BASE_URL = "https://ikalas.com"
-
-
 
 class Client{
     constructor(){
         this.auth = '';
+        this.baseUrl = "https://ikalas.com";
 
         this.defaultHeaders = {
             Accept: 'application/json',
@@ -16,7 +14,7 @@ class Client{
           };
 
         this.defaultRequest = {
-            baseUrl: IKALAS_BASE_URL,
+            baseUrl: this.baseUrl,
             url: '',
             method: 'GET',
             headers: {},
@@ -30,26 +28,37 @@ class Client{
     setApiKey(apiKey) {
         this.apiKey = apiKey;
         this.auth = 'Bearer ' + apiKey;
-        this.setDefaultRequest('baseUrl', IKALAS_BASE_URL);
         axios.defaults.headers.common['apikey'] = this.apiKey;
-      }
+    }
+
+    setBaseUrl(baseUrl) {
+      this.baseUrl = baseUrl;
+    }
     
-    async execute(appName) {
+    async execute(appName, inputFunction) {
         try{
             let headers= this.defaultHeaders;
+            axios.defaults.headers.common['apikey'] = this.apiKey;
             
             let response = await axios({
-              url: `${IKALAS_BASE_URL}/kli/execute-function/${appName}`,
+              url: `${this.baseUrl}/api/v1/${appName}`,
               method: "POST",
-              headers: headers
+              headers: headers,
+              data: inputFunction
             })
             if (response != null && response.data!=null) {
-              console.log(response.data)
+              // console.log(response.data)
               return response.data.result;
             }
             
         }catch (error){
-            console.log(error)
+            
+            if(error.response!=null){
+              console.log(error.response.status)
+            }else{
+              console.log(error)
+            }
+            throw error;
             return null;
         }
         
