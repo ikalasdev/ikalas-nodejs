@@ -29,7 +29,7 @@ async function generateWallets() {
 generateRandomEmails();
 
 async function generateRandomEmails() {
-    let emails = await ikalas.execute("generate-random-emails", 5);
+    let emails = await ikalas.execute("generate-random-emails", {count:5});
     return emails;
 }
 
