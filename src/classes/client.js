@@ -37,26 +37,26 @@ class Client{
 
     async execute(appName, inputFunction) {
         try{
-						if(inputFunction.file) {
-							const readFile = async () => new Promise((resolve, reject) => {
-								let a = [];
-								inputFunction.file.on('data', function(row) {
-									a.push(row.toString());
-								})
-								.on('end', function () {
-									resolve(a);
-								})
-								.on('error', function (error) {
-									reject(error)
-								});
-							});
+            if(inputFunction.file) {
+              const readFile = async () => new Promise((resolve, reject) => {
+                let a = [];
+                inputFunction.file.on('data', function(row) {
+                  a.push(row.toString());
+                })
+                .on('end', function () {
+                  resolve(a);
+                })
+                .on('error', function (error) {
+                  reject(error)
+                });
+              });
 
-							let dataObject
-							await readFile().then(async (data) => {dataObject = data})
-							inputFunction = JSON.stringify({
-								[types[appName]]: dataObject
-							})
-						}
+              let dataObject
+              await readFile().then(async (data) => {dataObject = data})
+              inputFunction = JSON.stringify({
+                [types[appName]]: dataObject
+              })
+            }
             let headers= this.defaultHeaders;
             axios.defaults.headers.common['apikey'] = this.apiKey;
 
