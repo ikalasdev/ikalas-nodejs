@@ -1,7 +1,10 @@
 'use strict';
 
 const axios = require("axios");
-
+const types = require("../config/dataTypes")
+var FormData = require('form-data');
+var fs = require('fs');
+var data = new FormData();
 
 class Client{
     constructor(){
@@ -37,9 +40,15 @@ class Client{
     
     async execute(appName, inputFunction) {
         try{
+						if(typeof inputFunction === 'string') {
+							data.append('', fs.createReadStream(inputFunction));
+							inputFunction = JSON.stringify({
+								[types[appName]]: data
+							})
+						}
             let headers= this.defaultHeaders;
             axios.defaults.headers.common['apikey'] = this.apiKey;
-            
+
             let response = await axios({
               url: `${this.baseUrl}/api/v1/${appName}`,
               method: "POST",
