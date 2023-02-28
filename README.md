@@ -57,7 +57,8 @@ async function jsonToCsv() {
 jsonToCsvFromFile();
 
 async function jsonToCsvFromFile() {
-    let csv = await ikalas.execute("json-to-csv", "/path/to/file.json");
+    let stream = fs.createReadStream("/path/file")
+    let csv = await ikalas.execute("json-to-csv", {file: stream});
     return csv;
 }
 
@@ -71,7 +72,8 @@ async function csvToJson() {
 csvToJsonFromFile();
 
 async function csvToJsonFromFile() {
-    let json = await ikalas.execute("csv-to-json", "/path/to/file.csv");
+    let stream = fs.createReadStream("/path/file")
+    let json = await ikalas.execute("csv-to-json", {file: stream});
     return json;
 }
 ```
