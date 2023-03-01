@@ -45,7 +45,7 @@ class Client{
         headers: headers,
         data: {keyData: key}
       })
-      return response
+      return response.data.valueData
     }
 
     async set(key, value) {
