@@ -61,9 +61,6 @@ async function csvToJson() {
     return json;
 }
 
-const getData = ikalas.get('key')
-
-const setData = ikalas.set('key', 'value')
 ```
 
 [Check the api documentation here](https://ikalas.com/app/documentation)
