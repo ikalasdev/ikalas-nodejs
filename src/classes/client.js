@@ -49,12 +49,13 @@ class Client{
                 Accept: 'application/json',
                 ...data.getHeaders()
               }
+              inputFunction = data
             }
             let response = await axios({
               url: `${this.baseUrl}/api/v1/${appName}`,
               method: "POST",
               headers: headers,
-              data: data
+              data: inputFunction
             })
             if (response != null && response.data!=null) {
               // console.log(response.data)
