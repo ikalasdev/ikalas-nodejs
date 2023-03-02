@@ -41,23 +41,20 @@ class Client{
         try{
             let headers= this.defaultHeaders;
             axios.defaults.headers.common['apikey'] = this.apiKey;
-            let param = Object.keys(inputFunction)[0]
-            if(inputFunction[param].files){
-              for(let file of inputFunction[param].files) {
+            if(inputFunction.files){
+              for(let file of inputFunction.files) {
                 data.append('', file)
               }
-              inputFunction[param] = data
               headers = {
                 Accept: 'application/json',
                 ...data.getHeaders()
               }
             }
-            console.log("inputFunction", axios.defaults.headers)
             let response = await axios({
               url: `${this.baseUrl}/api/v1/${appName}`,
               method: "POST",
               headers: headers,
-              data: inputFunction
+              data: data
             })
             if (response != null && response.data!=null) {
               // console.log(response.data)

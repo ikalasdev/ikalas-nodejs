@@ -54,6 +54,22 @@ async function jsonToCsv() {
     return csv;
 }
 
+jsonFileToCsvFile();
+
+async function jsonFileToCsvFile() {
+    let stream = fs.createReadStream("path/to/file1.json")
+    let stream2 = fs.createReadStream("path/to/file2.json")
+    let arrayOfFiles = await ikalas.execute("json-to-csv-file", { files: [stream, stream2]})
+}
+
+jsonFileToYamlFile();
+
+async function jsonFileToYamlFile() {
+    let stream = fs.createReadStream("path/to/file1.json")
+    let stream2 = fs.createReadStream("path/to/file2.json")
+    let arrayOfFiles = await ikalas.execute("convert-json-file-to-yaml-file", { files: [stream, stream2]})
+}
+
 csvToJson();
 
 async function csvToJson() {
