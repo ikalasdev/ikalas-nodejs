@@ -37,6 +37,32 @@ class Client{
       this.baseUrl = baseUrl;
     }
 
+    async get(key) {
+      let headers= this.defaultHeaders;
+      axios.defaults.headers.common['apikey'] = this.apiKey;
+
+      let response = await axios({
+        url: `${this.baseUrl}/npm/data/get`,
+        method: "GET",
+        headers: headers,
+        data: {keyData: key}
+      })
+      return response.data.valueData
+    }
+
+    async set(key, value) {
+      let headers= this.defaultHeaders;
+      axios.defaults.headers.common['apikey'] = this.apiKey;
+
+      let response = await axios({
+        url: `${this.baseUrl}/npm/data/set`,
+        method: "POST",
+        headers: headers,
+        data: {keyData: key, valueData: value}
+      })
+      return response
+    }
+    
     async execute(appName, inputFunction) {
         try{
             let headers= this.defaultHeaders;
