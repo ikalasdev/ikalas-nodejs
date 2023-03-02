@@ -58,7 +58,7 @@ class Client{
               data: inputFunction
             })
             if (response != null && response.data!=null) {
-              // console.log(response.data)
+              console.log(response.data)
               return response.data.result;
             }
             
