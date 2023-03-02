@@ -58,7 +58,7 @@ class Client{
               data: inputFunction
             })
             if (response != null && response.data!=null) {
-              console.log(response.data)
+              // console.log(response.data)
               return response.data.result;
             }
             
@@ -67,7 +67,7 @@ class Client{
             if(error.response!=null){
               console.log(error.response.status)
             }else{
-              //console.log(error)
+              console.log(error)
             }
             throw error;
             return null;
