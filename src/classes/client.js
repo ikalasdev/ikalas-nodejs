@@ -46,7 +46,7 @@ class Client{
           headers: headers,
           data: {keyData: key}
         })
-        return response.data
+        return response.data.valueData
       } catch (error) {
         throw error.response.data
       }
