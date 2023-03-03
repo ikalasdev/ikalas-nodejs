@@ -1,6 +1,8 @@
 'use strict';
 
 const axios = require("axios");
+const FormData = require("form-data");
+var data = new FormData()
 
 
 class Client{
@@ -73,7 +75,16 @@ class Client{
         try{
             let headers= this.defaultHeaders;
             axios.defaults.headers.common['apikey'] = this.apiKey;
-            
+            if(inputFunction.files){
+              for(let file of inputFunction.files) {
+                data.append('', file)
+              }
+              headers = {
+                Accept: 'application/json',
+                ...data.getHeaders()
+              }
+              inputFunction = data
+            }
             let response = await axios({
               url: `${this.baseUrl}/api/v1/${appName}`,
               method: "POST",

@@ -25,33 +25,59 @@ async function generateWallets() {
     let wallets = await ikalas.execute("batch-wallet-generator");
     return wallets;
 }
-
+```
+```js
 generateRandomEmails();
 
 async function generateRandomEmails() {
     let emails = await ikalas.execute("generate-random-emails", {count:5});
     return emails;
 }
-
+```
+```js
 generateQrCode();
 
 async function generateQrCode() {
     let qrCode = await ikalas.execute("generate-qrcode", { qrCodeData: "ikalas" });
     return qrCode;
 }
-
+```
+```js
 bep20Faucet();
 
 async function bep20Faucet() {
     let token = await ikalas.execute("bep20-faucet", { walletAddress: "YOUR_WALLET_ADDRESS"});
     return token;
 }
-
+```
+```js
 jsonToCsv();
 
 async function jsonToCsv() {
-    let csv = await ikalas.execute("json-to-csv", { jsonString: '{"test":"ikalas"}'});
+    let csv = await ikalas.execute("json-to-csv", { jsonString: '{"id":1,"str":"test"}'});
     return csv;
+}
+```
+will return
+```
+id,str
+1,test
+```
+```js
+jsonFileToCsvFile();
+
+async function jsonFileToCsvFile() {
+    let stream = fs.createReadStream("path/to/file1.json")
+    let stream2 = fs.createReadStream("path/to/file2.json")
+    let arrayOfFiles = await ikalas.execute("json-to-csv-file", { files: [stream, stream2]})
+}
+
+jsonFileToYamlFile();
+
+async function jsonFileToYamlFile() {
+    let stream = fs.createReadStream("path/to/file1.json")
+    let stream2 = fs.createReadStream("path/to/file2.json")
+    let arrayOfFiles = await ikalas.execute("convert-json-file-to-yaml-file", { files: [stream, stream2]})
 }
 
 csvToJson();
