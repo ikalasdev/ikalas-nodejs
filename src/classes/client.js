@@ -2,8 +2,6 @@
 
 const axios = require("axios");
 const FormData = require("form-data");
-var data = new FormData()
-
 
 class Client{
     constructor(){
@@ -73,6 +71,7 @@ class Client{
     
     async execute(appName, inputFunction) {
         try{
+            var data = new FormData()
             let headers= this.defaultHeaders;
             axios.defaults.headers.common['apikey'] = this.apiKey;
             if(inputFunction.files){
