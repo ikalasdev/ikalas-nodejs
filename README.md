@@ -88,6 +88,24 @@ async function csvToJson() {
 }
 
 ```
+```js
+updateOrCreateData(key, value);
+
+async function updateOrCreateData(key, value) {
+  let id = await ikalas.set(key, value);
+  return id;
+}
+```
+
+```js
+getData(key);
+
+async function getData(key) {
+  let data = await ikalas.get(key);
+  return data;
+}
+```
+
 
 [Check the api documentation here](https://ikalas.com/app/documentation)
 
