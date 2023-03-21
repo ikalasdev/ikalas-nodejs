@@ -91,7 +91,7 @@ async function csvToJson() {
 
 ## Data
 
-To create or update data in the [Ikalas](www.ikalas.com) website use the set method by passing a key and a value for that data as parameters.
+To create or update data in the [Ikalas](https://www.ikalas.com) website use the set method by passing a key and a value for that data as parameters.
 
 The set method returns the id of the data when created or updated succesfuly.
 
