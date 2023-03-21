@@ -88,6 +88,13 @@ async function csvToJson() {
 }
 
 ```
+
+## Data
+
+To create or update data in the [Ikalas](www.ikalas.com) website use the set method by passing a key and a value for that data as parameters.
+
+The set method returns the id of the data when created or updated succesfuly.
+
 ```js
 updateOrCreateData(key, value);
 
@@ -97,6 +104,18 @@ async function updateOrCreateData(key, value) {
 }
 ```
 
+Return example.
+
+```js
+updateOrCreateData("test_key", "test_value");
+```
+
+```js
+6
+```
+
+To retrieve an already created data use the get method by passing the key as a parameter.
+
 ```js
 getData(key);
 
@@ -104,6 +123,16 @@ async function getData(key) {
   let data = await ikalas.get(key);
   return data;
 }
+```
+
+Return example.
+
+```js
+getData("test_key");
+```
+
+```js
+"test value"
 ```
 
 
