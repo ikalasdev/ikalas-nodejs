@@ -48,7 +48,7 @@ class Client{
         })
         return response.data.valueData
       } catch (error) {
-        throw error.response.data
+        return error.response.data
       }
     }
 
