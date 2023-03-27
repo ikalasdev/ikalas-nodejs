@@ -22,14 +22,18 @@ ikalas.setApiKey('YOUR_API_KEY');
 generateWallets();
 
 async function generateWallets() {
-    let wallets = await ikalas.execute("batch-wallet-generator");
+    let wallets = await ikalas.execute("batch-wallet-generator", {numberOfWallets: 1});
     return wallets;
 }
 ```
 Will return
 ```
-id,str
-1,test
+[
+  {
+    "Public key": "0x7493C69D5f8F04dD0BD8D243fbdBC9769D70C0Cc"
+    "Private key": "0xa8e25e8bc566f1cf01f59a11aa01d7f0f68722cd72789ac0f60a8aae0f7cdb2d"
+  }
+]
 ```
 ```js
 generateRandomEmails();
@@ -78,7 +82,7 @@ async function bep20Faucet() {
 ```
 Will return
 ```
-
+generate wallets Success ! 10000 KIKF were sent to your wallet. Transaction hash: 0x1a88880cfe8357509565094c55f0ad65ff1c9b49b84dc6a58b85d4f7f0ec398b
 ```
 ```js
 jsonToCsv();
