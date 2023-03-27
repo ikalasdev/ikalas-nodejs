@@ -166,6 +166,25 @@ Will return
 ]
 ```
 
+## Data
+
+To create or update data in the [Ikalas](https://ikalas.com/app) website use the set method by passing a key and a value for that data as parameters.
+
+The set method returns the id of the data when created or updated succesfuly.
+
+```js
+await ikalas.set("myEmail", "john@gmail.com"); 
+```
+
+To retrieve an already created data use the get method by passing the key as a parameter.
+
+```js
+await ikalas.get("myEmail");
+
+// Expected output
+// john@gmail.com
+```
+
 [Check the api documentation here](https://ikalas.com/app/documentation)
 
 [Check the test code in the repository](https://github.com/ikalasdev/ikalas-nodejs)
