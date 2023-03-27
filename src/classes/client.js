@@ -41,10 +41,9 @@ class Client{
 
       try {
         let response = await axios({
-          url: `${this.baseUrl}/npm/data/get`,
+          url: `${this.baseUrl}/npm/data/get/${key}`,
           method: "GET",
           headers: headers,
-          data: {keyData: key}
         })
         return response.data.valueData
       } catch (error) {
