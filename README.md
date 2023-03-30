@@ -139,5 +139,3 @@ await ikalas.get("myEmail");
 ```
 
 [Check the api documentation here](https://ikalas.com/app/documentation)
-
-[Check the test code in the repository](https://github.com/ikalasdev/ikalas-nodejs)
