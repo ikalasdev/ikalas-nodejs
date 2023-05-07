@@ -70,30 +70,38 @@ class Client{
     
     async execute(appName, inputFunction) {
         try{
-            var data = new FormData()
-            let headers= this.defaultHeaders;
-            axios.defaults.headers.common['apikey'] = this.apiKey;
-            if(inputFunction.files){
-              for(let file of inputFunction.files) {
-                data.append('', file)
+          var data = new FormData()
+          let args = {}
+  
+          axios.defaults.headers.common['apikey'] = this.apiKey;
+  
+          for(const [key, value] of Object.entries(inputFunction)) {
+            if(key === 'files') {
+              for(const file of value) {
+                args['inputFiles'] = file
               }
-              headers = {
-                Accept: 'application/json',
-                ...data.getHeaders()
-              }
-              inputFunction = data
+            } else {
+              args[key] = value
             }
-            let response = await axios({
-              url: `${this.baseUrl}/api/v1/${appName}`,
-              method: "POST",
-              headers: headers,
-              data: inputFunction
-            })
+          }
+  
+          for(const [key, value] of Object.entries(args)) {
+            data.append(key, value)
+          }
+          
+          let response = await axios({
+            url: `${this.baseUrl}/api/v1/${appName}`,
+            method: "POST",
+            headers: {
+              Accept: 'application/json',
+              ...data.getHeaders()
+            },
+            data
+          })
             if (response != null && response.data!=null) {
               // console.log(response.data)
               return response.data.result;
             }
-            
         }catch (error){
             
             if(error.response!=null){
