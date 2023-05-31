@@ -3,6 +3,18 @@
 const axios = require("axios");
 const FormData = require("form-data");
 
+function createFormData(formData, key, data) {
+  if (key !== "inputFiles" && (data === Object(data) || Array.isArray(data))) {
+    for (var i in data) {
+      createFormData(formData, key + "[" + i + "]", data[i]);
+    }
+  } else if(typeof data === 'boolean') {
+    formData.append(key, data.toString());
+  } else {
+    formData.append(key, data);
+  }
+}
+
 class Client{
     constructor(){
         this.auth = '';
@@ -86,7 +98,7 @@ class Client{
           }
   
           for(const [key, value] of Object.entries(args)) {
-            data.append(key, value)
+            createFormData(data, key, value)
           }
           
           let response = await axios({
