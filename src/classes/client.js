@@ -11,7 +11,9 @@ function createFormData(formData, key, data) {
   } else if(typeof data === 'boolean') {
     formData.append(key, data.toString());
   } else {
-    formData.append(key, data);
+    for(const file of data){
+      formData.append(key, file);
+    }
   }
 }
 
@@ -89,8 +91,9 @@ class Client{
   
           for(const [key, value] of Object.entries(inputFunction)) {
             if(key === 'files') {
+              args['inputFiles'] = []
               for(const file of value) {
-                args['inputFiles'] = file
+                args['inputFiles'].push(file)
               }
             } else {
               args[key] = value
