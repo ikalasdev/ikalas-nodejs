@@ -104,6 +104,8 @@ class Client{
           let response = await axios({
             url: `${this.baseUrl}/api/v1/${appName}`,
             method: "POST",
+            maxContentLength: Infinity,
+            maxBodyLength: Infinity,
             headers: {
               Accept: 'application/json',
               ...data.getHeaders()
