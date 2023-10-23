@@ -1,6 +1,6 @@
 {
   "name": "@ikalasdev/ikalas",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "The Official Ikalas Node.js API Library",
   "main": "index.js",
   "scripts": {
