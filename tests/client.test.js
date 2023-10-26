@@ -1,3 +1,4 @@
+const fs = require("fs");
 require("dotenv").config();
 const Client = require("../src/classes/client");
 
@@ -11,8 +12,17 @@ describe("tests client", () => {
     let result = await client.execute("batch-wallet-generator", {
       numberOfWallets: "10",
     });
-    console.log(result);
     expect(result.length).toBe(10);
+  });
+
+  test("simple remote call with uploading one file", async () => {
+    const stream = fs.createReadStream(__dirname + "/files/chatgpt_icon.png");
+    let result = await client.execute("generate-qrcode", {
+      qrCodeData: "ikalas.com",
+      files: [stream],
+    });
+    expect(result.length).toBe(1);
+    expect(result[0].outputFileUrl.substring(0, 5)).toBe("https");
   });
 
   test("get file", async () => {
