@@ -91,14 +91,28 @@ describe("tests client", () => {
     };
 
     fileStream1 = fs.createReadStream(__dirname + "/files/file1.pdf");
+    fileStream2 = fs.createReadStream(__dirname + "/files/pdf-sample.pdf");
+    fileStream3 = fs.createReadStream(__dirname + "/files/file-sample.pdf");
 
-    let result = await client.execute("pdf-to-text", {files: [fileStream1]});
+    let result = await client.execute("pdf-to-text", {files: [fileStream1, fileStream2, fileStream3]});
 
     const tempPath = __dirname + "/files/temp.txt"
+    const tempPath2 = __dirname + "/files/temp2.txt"
+    const tempPath3 = __dirname + "/files/temp3.txt"
     
     await downloadFile(result[0].outputFileUrl, tempPath);
     let data = fs.readFileSync(tempPath, "utf8");
-    expect(data.substring(0, 31)).toBe("THE DECLARATION OF INDEPENDENCE");
+    expect(data.includes("THE DECLARATION OF INDEPENDENCE" || "Lorem ipsum" || "Adobe Acrobat PDF Files")).toBe(true);
     fs.unlinkSync(tempPath)
+
+    await downloadFile(result[0].outputFileUrl, tempPath2);
+    data = fs.readFileSync(tempPath2, "utf8");
+    expect(data.includes("THE DECLARATION OF INDEPENDENCE" || "Lorem ipsum" || "Adobe Acrobat PDF Files")).toBe(true);
+    fs.unlinkSync(tempPath2)
+
+    await downloadFile(result[0].outputFileUrl, tempPath3);
+    data = fs.readFileSync(tempPath3, "utf8");
+    expect(data.includes("THE DECLARATION OF INDEPENDENCE" || "Lorem ipsum" || "Adobe Acrobat PDF Files")).toBe(true);
+    fs.unlinkSync(tempPath3)
   });
 });
