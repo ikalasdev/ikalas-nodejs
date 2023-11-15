@@ -13,7 +13,7 @@ const args = {
     stream1,
     stream2
   ],
-	prompt: "prompt text"
+  prompt: "prompt text"
 }
 
 describe("tests client", () => {
