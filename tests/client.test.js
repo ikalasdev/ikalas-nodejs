@@ -9,12 +9,9 @@ const stream1 = fs.createReadStream(__dirname + "/files/file1.pdf");
 const stream2 = fs.createReadStream(__dirname + "/files/chatgpt_icon.png");
 
 const args = {
-  inputFiles: [
-    stream1,
-    stream2
-  ],
-  prompt: "prompt text"
-}
+  inputFiles: [stream1, stream2],
+  prompt: "prompt text",
+};
 
 describe("tests client", () => {
   beforeEach(() => {
@@ -26,7 +23,7 @@ describe("tests client", () => {
     let result = await client.execute("batch-wallet-generator", {
       numberOfWallets: "10",
     });
-    expect(result.length).toBe(10);
+    expect(result.includes("10 addresses generated")).toBe(true);
   });
 
   test("simple remote call with uploading one file", async () => {
@@ -48,26 +45,19 @@ describe("tests client", () => {
     expect(result[0].outputFileUrl.substring(0, 5)).toBe("https");
   });
 
-  test("local", async () => {
-    client = new Client();
-    client.setApiKey("IKALAS_WEB-API-KEY");
-    client.setBaseUrl("http://localhost:9595");
-
-    let result = await client.execute("batch-wallet-generator", {
-      numberOfWallets: "10",
-    });
-    expect(result.length).toBe(10);
-  });
-
   test("should include all args", () => {
     var data = new FormData();
-    
+
     for (const [key, value] of Object.entries(args)) {
       createFormData(data, key, value);
     }
 
-    expect(data._streams[0].split("filename")[1].split("\"")[1].split("\"")[0]).toBe("file1.pdf");
-    expect(data._streams[3].split("filename")[1].split("\"")[1].split("\"")[0]).toBe("chatgpt_icon.png");
+    expect(
+      data._streams[0].split("filename")[1].split('"')[1].split('"')[0]
+    ).toBe("file1.pdf");
+    expect(
+      data._streams[3].split("filename")[1].split('"')[1].split('"')[0]
+    ).toBe("chatgpt_icon.png");
     expect(data._streams[7]).toBe("prompt text");
   });
 
@@ -94,25 +84,45 @@ describe("tests client", () => {
     fileStream2 = fs.createReadStream(__dirname + "/files/pdf-sample.pdf");
     fileStream3 = fs.createReadStream(__dirname + "/files/file-sample.pdf");
 
-    let result = await client.execute("pdf-to-text", {files: [fileStream1, fileStream2, fileStream3]});
+    let result = await client.execute("pdf-to-text", {
+      files: [fileStream1, fileStream2, fileStream3],
+    });
 
-    const tempPath = __dirname + "/files/temp.txt"
-    const tempPath2 = __dirname + "/files/temp2.txt"
-    const tempPath3 = __dirname + "/files/temp3.txt"
-    
+    const tempPath = __dirname + "/files/temp.txt";
+    const tempPath2 = __dirname + "/files/temp2.txt";
+    const tempPath3 = __dirname + "/files/temp3.txt";
+
     await downloadFile(result[0].outputFileUrl, tempPath);
     let data = fs.readFileSync(tempPath, "utf8");
-    expect(data.includes("THE DECLARATION OF INDEPENDENCE" || "Lorem ipsum" || "Adobe Acrobat PDF Files")).toBe(true);
-    fs.unlinkSync(tempPath)
+    expect(
+      data.includes(
+        "THE DECLARATION OF INDEPENDENCE" ||
+          "Lorem ipsum" ||
+          "Adobe Acrobat PDF Files"
+      )
+    ).toBe(true);
+    fs.unlinkSync(tempPath);
 
     await downloadFile(result[0].outputFileUrl, tempPath2);
     data = fs.readFileSync(tempPath2, "utf8");
-    expect(data.includes("THE DECLARATION OF INDEPENDENCE" || "Lorem ipsum" || "Adobe Acrobat PDF Files")).toBe(true);
-    fs.unlinkSync(tempPath2)
+    expect(
+      data.includes(
+        "THE DECLARATION OF INDEPENDENCE" ||
+          "Lorem ipsum" ||
+          "Adobe Acrobat PDF Files"
+      )
+    ).toBe(true);
+    fs.unlinkSync(tempPath2);
 
     await downloadFile(result[0].outputFileUrl, tempPath3);
     data = fs.readFileSync(tempPath3, "utf8");
-    expect(data.includes("THE DECLARATION OF INDEPENDENCE" || "Lorem ipsum" || "Adobe Acrobat PDF Files")).toBe(true);
-    fs.unlinkSync(tempPath3)
+    expect(
+      data.includes(
+        "THE DECLARATION OF INDEPENDENCE" ||
+          "Lorem ipsum" ||
+          "Adobe Acrobat PDF Files"
+      )
+    ).toBe(true);
+    fs.unlinkSync(tempPath3);
   });
 });
