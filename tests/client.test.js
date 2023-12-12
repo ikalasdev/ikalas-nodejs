@@ -13,6 +13,24 @@ const args = {
   prompt: "prompt text",
 };
 
+const downloadFile = async (url, dest) => {
+  await new Promise((resolve, reject) => {
+    https.get(url, (res) => {
+      let filePath = fs.createWriteStream(dest);
+      res.pipe(filePath);
+      filePath.on("finish", () => {
+        filePath.close();
+        console.log("Download Completed");
+        resolve();
+      });
+      filePath.on("error", (e) => {
+        console.log("error", e);
+        // reject()
+      });
+    });
+  });
+};
+
 describe("tests client", () => {
   beforeEach(() => {
     client = new Client();
@@ -62,24 +80,6 @@ describe("tests client", () => {
   });
 
   test("text content should match pdf content", async () => {
-    const downloadFile = async (url, dest) => {
-      await new Promise((resolve, reject) => {
-        https.get(url, (res) => {
-          let filePath = fs.createWriteStream(dest);
-          res.pipe(filePath);
-          filePath.on("finish", () => {
-            filePath.close();
-            console.log("Download Completed");
-            resolve();
-          });
-          filePath.on("error", (e) => {
-            console.log("error", e);
-            // reject()
-          });
-        });
-      });
-    };
-
     fileStream1 = fs.createReadStream(__dirname + "/files/file1.pdf");
     fileStream2 = fs.createReadStream(__dirname + "/files/pdf-sample.pdf");
     fileStream3 = fs.createReadStream(__dirname + "/files/file-sample.pdf");
@@ -94,35 +94,32 @@ describe("tests client", () => {
 
     await downloadFile(result[0].outputFileUrl, tempPath);
     let data = fs.readFileSync(tempPath, "utf8");
-    expect(
-      data.includes(
-        "THE DECLARATION OF INDEPENDENCE" ||
-          "Lorem ipsum" ||
-          "Adobe Acrobat PDF Files"
-      )
-    ).toBe(true);
+    let test = data.includes(
+      "THE DECLARATION OF INDEPENDENCE" ||
+        "Lorem ipsum" ||
+        "Adobe Acrobat PDF Files"
+    );
+    expect(test).toBe(true);
     fs.unlinkSync(tempPath);
 
     await downloadFile(result[0].outputFileUrl, tempPath2);
     data = fs.readFileSync(tempPath2, "utf8");
-    expect(
-      data.includes(
-        "THE DECLARATION OF INDEPENDENCE" ||
-          "Lorem ipsum" ||
-          "Adobe Acrobat PDF Files"
-      )
-    ).toBe(true);
+    test = data.includes(
+      "THE DECLARATION OF INDEPENDENCE" ||
+        "Lorem ipsum" ||
+        "Adobe Acrobat PDF Files"
+    );
+    expect(test).toBe(true);
     fs.unlinkSync(tempPath2);
 
     await downloadFile(result[0].outputFileUrl, tempPath3);
     data = fs.readFileSync(tempPath3, "utf8");
-    expect(
-      data.includes(
-        "THE DECLARATION OF INDEPENDENCE" ||
-          "Lorem ipsum" ||
-          "Adobe Acrobat PDF Files"
-      )
-    ).toBe(true);
+    test = data.includes(
+      "THE DECLARATION OF INDEPENDENCE" ||
+        "Lorem ipsum" ||
+        "Adobe Acrobat PDF Files"
+    );
+    expect(test).toBe(true);
     fs.unlinkSync(tempPath3);
   });
 });
