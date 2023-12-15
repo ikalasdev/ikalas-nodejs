@@ -18,7 +18,6 @@ const downloadFile = async (url, dest) => {
       res.pipe(filePath);
       filePath.on("finish", () => {
         filePath.close();
-        console.log("Download Completed");
         resolve();
       });
       filePath.on("error", (e) => {
@@ -55,7 +54,6 @@ describe("tests client", () => {
     let result = await client.execute("generate-qrcode", {
       qrCodeData: "ikalas.com",
     });
-    console.log(result);
     expect(result.length).toBe(1);
     expect(result[0].outputFileUrl.substring(0, 5)).toBe("https");
   });
@@ -106,5 +104,5 @@ describe("tests client", () => {
     test = testStrings.some((v) => data.includes(v));
     fs.unlinkSync(tempPath3);
     expect(test).toBe(true);
-  });
+  }, 5000);
 });
