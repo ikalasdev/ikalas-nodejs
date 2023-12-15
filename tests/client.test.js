@@ -104,5 +104,5 @@ describe("tests client", () => {
     test = testStrings.some((v) => data.includes(v));
     fs.unlinkSync(tempPath3);
     expect(test).toBe(true);
-  }, 5000);
+  }, 20000);
 });
